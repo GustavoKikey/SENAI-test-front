@@ -1,15 +1,7 @@
-/* src/styles/Home.css */
-
-/* Estilos gerais */
 .home-container {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Garante que o conteúdo ocupe a altura da tela */
-}
-
-/* Cabeçalho */
-.header {
-  /* Estilos para o cabeçalho */
+  min-height: 100vh;
 }
 
 .logo {
@@ -24,30 +16,27 @@
   margin-left: 20%;
 }
 
-/* Barra de navegação */
 .navbar {
   display: flex;
   justify-content: center;
   padding: 20px 0;
 }
 
-/* Banner */
 .banner {
-  width: 100%; /* Ocupa toda a largura da tela */
+  width: 100%;
 }
 
 .banner img {
   width: 100%;
-  height: auto; /* Mantém a proporção da imagem */
+  height: auto;
 }
 
-/* Seção de conteúdo */
 .content {
   display: flex;
   background-color: lightblue;
   padding: 20px;
   gap: 20px;
-  margin: 0 20px; /* Adiciona margem lateral */
+  margin: 0 20px;
 }
 
 .slideshow {
@@ -61,14 +50,14 @@
   width: 100%;
   max-width: 400px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: white;
   padding: 10px;
 }
 
 .text {
   width: 50%;
-  color: black; /* Cor normal do texto */
+  color: black;
 }
 
 .text h1 {
@@ -81,13 +70,12 @@
   line-height: 1.6;
 }
 
-/* Próximos passos */
 .next-steps-content {
   display: flex;
   background-color: white;
   padding: 20px;
   gap: 20px;
-  margin: 0 20px; /* Adiciona margem nas laterais */
+  margin: 0 20px;
 }
 
 .next-steps-content .text {
@@ -105,7 +93,7 @@
   width: 100%;
   max-width: 400px;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: white;
   padding: 10px;
 }
@@ -120,7 +108,6 @@
   line-height: 1.6;
 }
 
-/* Seção da imagem centralizada */
 .center-image-section {
   display: flex;
   justify-content: center;
@@ -132,15 +119,72 @@
   border-radius: 10px;
 }
 
-/* Rodapé */
 .footer {
-  background-color: #1c32bb; /* Cor de fundo azul */
+  background-color: #1c32bb;
   display: flex;
-  justify-content: flex-end; /* Alinha o conteúdo à direita */
+  justify-content: flex-end;
 }
 
 .footer img {
   width: 20%;
   background-color: white;
   margin-right: 20%;
+}
+
+.Modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.Modal h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2555ab;
+}
+
+.Modal .form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.Modal label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+
+.Modal input,
+.Modal select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.Modal button[type="submit"] {
+  background-color: #2555ab;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.Modal .error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: center;
 }

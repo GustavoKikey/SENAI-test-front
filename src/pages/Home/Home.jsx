@@ -1,6 +1,6 @@
-// src/Home.js
-
 import React, { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
 import Button from "../../components/Button";
 import "./styles/Home.css";
 import Modal from "react-modal";
@@ -17,19 +17,26 @@ const Home = () => {
     institution: "",
   });
 
+  const validationSchema = Yup.object({
+    cpf: Yup.string()
+      .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "CPF inválido")
+      .required("CPF é obrigatório"),
+    fullName: Yup.string().required("Nome completo é obrigatório"),
+    email: Yup.string()
+      .email("E-mail inválido")
+      .required("E-mail é obrigatório"),
+    phoneNumber: Yup.string().required("Celular é obrigatório"),
+    specialization: Yup.string().required("Especialização é obrigatória"),
+    institution: Yup.string().required("Casa é obrigatória"),
+  });
+
   const handleButtonClick = (message) => {
     alert(message);
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
+  const handleFormSubmit = async (values) => {
     const { cpf, fullName, email, phoneNumber, specialization, institution } =
-      formData;
+      values;
 
     try {
       const response = await fetch("http://localhost:8080/users", {
@@ -60,6 +67,88 @@ const Home = () => {
 
   return (
     <div className="home-container">
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        className="Modal"
+      >
+        <h2>Formulário de Inscrição de Voluntário na Campanha MS Pela Vida</h2>
+        <Formik
+          initialValues={formData}
+          validationSchema={validationSchema}
+          onSubmit={handleFormSubmit}
+        >
+          <Form>
+            {/* CPF */}
+            <div className="form-group">
+              <label htmlFor="cpf">CPF:</label>
+              <Field name="cpf" as={InputMask} mask="999.999.999-99" />
+              <ErrorMessage name="cpf">
+                {(msg) => <div className="error-message">{msg}</div>}
+              </ErrorMessage>
+            </div>
+
+            {/* Nome Completo */}
+            <div className="form-group">
+              <label htmlFor="fullName">Nome completo:</label>
+              <Field type="text" name="fullName" />
+              <ErrorMessage name="fullName">
+                {(msg) => <div className="error-message">{msg}</div>}
+              </ErrorMessage>
+            </div>
+
+            {/* E-mail */}
+            <div className="form-group">
+              <label htmlFor="email">E-mail:</label>
+              <Field type="email" name="email" />
+              <ErrorMessage name="email">
+                {(msg) => <div className="error-message">{msg}</div>}
+              </ErrorMessage>
+            </div>
+
+            {/* Celular */}
+            <div className="form-group">
+              <label htmlFor="phoneNumber">Celular:</label>
+              <Field name="phoneNumber" as={InputMask} mask="(99) 99999-9999" />
+              <ErrorMessage name="phoneNumber">
+                {(msg) => <div className="error-message">{msg}</div>}
+              </ErrorMessage>
+            </div>
+
+            {/* Especialização */}
+            <div className="form-group">
+              <label htmlFor="specialization">Especialização:</label>
+              <Field as="select" name="specialization">
+                <option value="">Selecione</option>
+                <option value="PROFESSOR">Professor</option>
+                <option value="TECNICO">Técnico</option>
+                <option value="ENGENHEIRO">Engenheiro</option>
+              </Field>
+              <ErrorMessage name="specialization">
+                {(msg) => <div className="error-message">{msg}</div>}
+              </ErrorMessage>
+            </div>
+
+            {/* Casa */}
+            <div className="form-group">
+              <label htmlFor="institution">Casa:</label>
+              <Field as="select" name="institution">
+                <option value="">Selecione</option>
+                <option value="FIEMS">FIEMS</option>
+                <option value="SESI">SESI</option>
+                <option value="IEL">IEL</option>
+                <option value="SENAI">SENAI</option>
+              </Field>
+              <ErrorMessage name="institution">
+                {(msg) => <div className="error-message">{msg}</div>}
+              </ErrorMessage>
+            </div>
+
+            <button type="submit">REALIZAR INSCRIÇÃO</button>
+          </Form>
+        </Formik>
+      </Modal>
+
       <header className="header">
         <div className="logo">
           <img src="/senai-logo.png" alt="Logo" />
@@ -69,7 +158,9 @@ const Home = () => {
       <nav className="navbar">
         <Button
           label="Sobre o projeto"
-          onClick={() => handleButtonClick("Sobre o projeto clicked")}
+          onClick={() =>
+            handleButtonClick("Sobre o projeto em desenvolvimento")
+          }
         />
         <Button label="Inscrições" onClick={() => setIsModalOpen(true)} />
         <Button
@@ -134,7 +225,7 @@ const Home = () => {
           </p>
           <Button
             label="Quero participar"
-            onClick={() => handleButtonClick("Quero participar clicked")}
+            onClick={() => setIsModalOpen(true)}
           />
         </div>
         <div className="image">
@@ -147,82 +238,6 @@ const Home = () => {
           <img src="/esg.png" alt="Center Image" />
         </div>
       </section>
-
-      <Modal isOpen={isModalOpen} onRequestClose={() => setIsModalOpen(false)}>
-        <h2>Inscrição</h2>
-        <form onSubmit={handleFormSubmit}>
-          <div>
-            <label>CPF:</label>
-            <InputMask
-              mask="999.999.999-99"
-              value={formData.cpf}
-              onChange={handleInputChange}
-              name="cpf"
-              required
-            />
-          </div>
-          <div>
-            <label>Nome completo:</label>
-            <input
-              type="text"
-              value={formData.fullName}
-              onChange={handleInputChange}
-              name="fullName"
-              required
-            />
-          </div>
-          <div>
-            <label>E-mail:</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              name="email"
-              required
-            />
-          </div>
-          <div>
-            <label>Celular:</label>
-            <InputMask
-              mask="(99) 99999-9999"
-              value={formData.phoneNumber}
-              onChange={handleInputChange}
-              name="phoneNumber"
-              required
-            />
-          </div>
-          <div>
-            <label>Especialização:</label>
-            <select
-              value={formData.specialization}
-              onChange={handleInputChange}
-              name="specialization"
-              required
-            >
-              <option value="">Selecione</option>
-              <option value="PROFESSOR">Professor</option>
-              <option value="TECNICO">Técnico</option>
-              <option value="ENGENHEIRO">Engenheiro</option>
-            </select>
-          </div>
-          <div>
-            <label>Casa:</label>
-            <select
-              value={formData.institution}
-              onChange={handleInputChange}
-              name="institution"
-              required
-            >
-              <option value="">Selecione</option>
-              <option value="FIEMS">FIEMS</option>
-              <option value="SESI">SESI</option>
-              <option value="IEL">IEL</option>
-              <option value="SENAI">SENAI</option>
-            </select>
-          </div>
-          <button type="submit">Enviar</button>
-        </form>
-      </Modal>
 
       <footer className="footer">
         <div className="footer">
