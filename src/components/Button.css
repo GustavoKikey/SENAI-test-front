@@ -1,0 +1,19 @@
+/* src/components/Button.css */
+
+.custom-button {
+  background-color: white;
+  color: blue;
+  border: none; /* Remove a borda */
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 20px; /* Bordas arredondadas */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  margin: 0 10px; /* Espaçamento horizontal entre os botões */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+.custom-button:hover {
+  background-color: lightblue;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2); /* Sombra mais intensa ao passar o mouse */
+}
